@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        
+        <script>
+            var a;
+            var api_key="http://www.apilayer.net/api/live?access_key=e849bc63d8b8389018477551225efe63&format=1"
+            $(document).ready(function(){
+               
+                $.ajax({url:api_key ,
+                
+                dataType: "json",
+                success: function(result){
+                
+                console.log(result);
+                a=result;
+                var select = $("#countrySelect");
+                for (var country_name in a.quotes) {
+                var option = document.createElement('option');
+                option.innerHTML = country_name;
+                option.value = country_name;
+                select.append(option);
+                }
+                
+                },
+                error:function(result){
+                $("#div1").html("Some Internal Error Occurs");
+                }
+                });
+            });
+
+            
+
+            </script>
+        <title>CONVERTOR </title> 
+        
+    </head>
+    <body>
+        <h1 style="text-align: center;margin: 20px;color: rgb(132, 17, 199);">Currency Converter</h1>
+       <div class="main">
+           <div style="padding: 10px;">
+               <img src="money-icon.png" style=" height:200px;width:200px;" title="image"/>
+           </div>
+            <span class="custom-dropdown">
+            <label style="padding: 10px;color: #2a2a2b;">Select Country Code </label><br>
+            <select id="countrySelect"  style="padding: 10px;margin: 10px;" required>
+              <!--
+                This is how we can do "placeholder" options.
+                note: "required" attribute is on the select
+              -->
+              <option value="" hidden
+              >Select Country Code</option>
+              <!-- normal options -->
+            </select>
+            </span>
+
+            <br>
+            <label style="padding:10px;color: #4f4f52;">Currency Value With respect to Doller </label><br>
+            <div id="div1" style="margin:23px;">Equivalent Currency</div>
+
+            <script>
+                $('#countrySelect').on('change', function() {
+                $("#div1").html(a.quotes[this.value]);
+
+                });
+            
+            </script>
+
+    </div>
+    </body>
+    
+</html>
